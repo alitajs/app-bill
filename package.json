@@ -1,0 +1,28 @@
+{
+    "name": "app-bill",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "alita dev"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alitajs/app-bill.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/alitajs/app-bill/issues"
+    },
+    "homepage": "https://github.com/alitajs/app-bill#readme",
+    "dependencies": {
+        "@alita/cloud": "^0.2.0",
+        "@alita/flow": "^3.0.0-beta.5",
+        "@alita/icons": "^0.2.0",
+        "alita": "3.0.0-rc.1",
+        "antd-mobile": "^5.9.1",
+        "antd-mobile-icons": "^0.2.2"
+    }
+}
