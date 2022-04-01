@@ -1,24 +1,70 @@
 /* 样式统一调整的区域 */
+//卡片
 .adm-card-body {
   padding: 0;
 }
+//分割线
 .adm-divider::after,
 .adm-divider::before {
   border-width: 0.04rem 0 0 !important;
 }
+
+//键盘
+.keyboard{
+  .adm-number-keyboard-key{
+    border-radius: 20px ;
+  }
+  .adm-number-keyboard-wrapper{
+    background-color: #f5f5f5;
+  }
+  .adm-number-keyboard-main.confirmed-style{
+    height:340px;
+    justify-content:space-evenly;
+    align-items:center;
+  }
+  .number-key:not(:nth-last-child(2)){
+    flex: 0 1 auto;
+    height:0.7rem;
+    width:1.7rem;
+  }
+  .number-key:nth-last-child(2){
+    flex: 0 1 auto;
+    height:0.7rem;
+    width:3.5rem;
+  }
+  .sign-key {
+    flex: 0 1 auto;
+    height:0.7rem;
+    width:1.7rem;
+  }
+  .ok-key {
+    height:2.3rem !important;
+    flex:1;
+  }
+  .adm-number-keyboard-confirm{
+    display: flex;
+    flex-wrap: wrap;
+    align-content:space-around;
+    height:340px !important;
+    padding-left:3px;
+  }
+  .bs-key{
+    flex: 0 1 auto;
+    height:0.7rem;
+    width:1.7rem;
+  }
+}
+.month{
+  .adm-button{
+    width:150px;
+    height:70px;
+  }
+}
+//字体图标
 .icon {
   width: 1.5em;
   height: 1.5em;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
-}
-.number-key::before{
-  border-radius: 10px ;
-}
-.adm-number-keyboard-key{
-  border-radius: 10px ;
-}
-.adm-number-keyboard-main{
-  background-color: transparent !important;
 }

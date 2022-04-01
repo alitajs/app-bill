@@ -21,25 +21,16 @@ import {
   CameraOutline,
 } from "antd-mobile-icons";
 import {
+  Button,
   Card,
   Divider,
   Input,
   NumberKeyboard,
   Popup,
+  Space,
   Swiper,
   Toast,
 } from "antd-mobile";
-const actions = {
-  onClose: () => {
-    Toast.show("closed");
-  },
-  onInput: (key: string) => {
-    Toast.show(key);
-  },
-  onDelete: () => {
-    Toast.show("delete");
-  },
-};
 const Page = () => {
   const [icons] = useState([
     "canyin",
@@ -70,8 +61,13 @@ const Page = () => {
     "生活服务",
   ]);
   const [inputValue, setInputValue] = useState("");
-  const [editVisivale, seteditVisivale] = useState(true);
-  const [keyboard, setkeyboard] = useState(true);
+  //添加弹窗
+  const [editVisivale, seteditVisivale] = useState(false);
+  //选择弹窗
+  const [selectVisivale, seteSelectVisivale] = useState(false);
+  //筛选弹窗
+  const [filterVisivale, seteFilterVisivale] = useState(true);
+  const [keyboard, setkeyboard] = useState(false);
   const [clickIndex, setclickIndex] = useState(-1);
   const [flag, setFlag] = useState(false);
   //鼠标在元素中的相对位置
@@ -206,7 +202,12 @@ const Page = () => {
           <span>记账本</span>
           <div className={styles.dashedSquare}></div>
         </section>
-        <span className={styles.month}>
+        <span
+          className={styles.month}
+          onClick={() => {
+            seteSelectVisivale(true);
+          }}
+        >
           2022年3月
           <DownOutline />
         </span>
@@ -419,7 +420,7 @@ const Page = () => {
           </div>
         </div>
         <NumberKeyboard
-          className={styles.keyboard}
+          className={styles.keyboard + " " + "keyboard"}
           visible={keyboard}
           showCloseButton={false}
           confirmText="完成"
@@ -440,6 +441,50 @@ const Page = () => {
           }}
           customKey="."
         />
+      </Popup>
+      <Popup
+        bodyClassName={styles.selectPopup}
+        visible={selectVisivale}
+        onMaskClick={() => {
+          seteSelectVisivale(false);
+        }}
+        bodyStyle={{ height: "35vh" }}
+      >
+        <div className={styles.header}>
+          <LeftOutline color="#333333" />
+          <span>选择月份</span>
+        </div>
+        <div className={styles.year}>
+          <LeftOutline color="#333333" />
+          <span>2022</span>
+          <RightOutline />
+        </div>
+        <div className={styles.month + " " + "month"}>
+          <Button color="primary">1月</Button>
+          <Button>2月</Button>
+          <Button>3月</Button>
+          <Button>4月</Button>
+        </div>
+      </Popup>
+      <Popup
+        bodyClassName={styles.filterPopup}
+        visible={filterVisivale}
+        onMaskClick={() => {
+          seteFilterVisivale(false);
+        }}
+        bodyStyle={{ height: "80vh" }}
+      >
+        <div className={styles.header}>
+          <LeftOutline color="#333333" />
+          <span>筛选</span>
+        </div>
+        <div className={styles.categoryWrapper}>
+          <span className={styles.category}>快捷分类</span>
+          <div className={styles.name}>
+            <div>全部支出</div>
+            <div>全部收入</div>
+          </div>
+        </div>
       </Popup>
     </div>
   );
