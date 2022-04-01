@@ -69,7 +69,10 @@ const Page = () => {
     "运动",
     "生活服务",
   ]);
+  const [inputValue, setInputValue] = useState("");
   const [editVisivale, seteditVisivale] = useState(true);
+  const [keyboard, setkeyboard] = useState(true);
+  const [clickIndex, setclickIndex] = useState(-1);
   const [flag, setFlag] = useState(false);
   //鼠标在元素中的相对位置
   const [position, setPosition] = useState({
@@ -323,6 +326,8 @@ const Page = () => {
         className={styles.edit}
         onClick={() => {
           seteditVisivale(true);
+          setkeyboard(true);
+          setInputValue("");
         }}
       >
         <EditSFill className={styles.editIcon} />
@@ -332,68 +337,107 @@ const Page = () => {
         visible={editVisivale}
         onMaskClick={() => {
           seteditVisivale(false);
+          setkeyboard(false);
+          setInputValue("");
         }}
         bodyStyle={{ height: "80vh" }}
       >
-        <div className={styles.head}>
-          <span>
-            总帐本
-            <div className={styles.triangle}></div>
-          </span>
-          <CloseOutline color="#c8c8c8" />
-        </div>
-        <div className={styles.pay}>
-          <div className={styles.info}>支出</div>
-          <div className={styles.info + " " + styles.inCome}>收入</div>
-          <div className={styles.account}>
-            不选择账户
-            <div className={styles.triangle}></div>
+        <div className={styles.content}>
+          <div className={styles.head}>
+            <span>
+              总帐本
+              <div className={styles.triangle}></div>
+            </span>
+            <CloseOutline
+              color="#c8c8c8"
+              onClick={() => {
+                seteditVisivale(false);
+                setkeyboard(false);
+              }}
+            />
           </div>
-        </div>
-        <div className={styles.cost}>
-          <i className={styles.RMBIcon}>￥</i>
-          <Input autoFocus={true} className={styles.costInput} />
-        </div>
-        <Divider className={styles.divider} />
-        <Swiper className={styles.swiper}>
-          <Swiper.Item className={styles.item}>
-            {icons.map((icon, index) => {
-              console.log(icon);
-              console.log(iconsName[index]);
-
-              return (
-                <div className={styles.icon} key={icon}>
-                  <svg className="icon" aria-hidden="true">
-                    <use xlinkHref={`#icon-${icon}`}></use>
-                  </svg>
-                  {iconsName[index]}
-                </div>
-              );
-            })}
-          </Swiper.Item>
-          <Swiper.Item>
-            <div></div>
-            <div></div>
-          </Swiper.Item>
-          <Swiper.Item>
-            <div></div>
-          </Swiper.Item>
-        </Swiper>
-        <div className={styles.tool}>
-          <div className={styles.note}>添加备注...</div>
-          <div className={styles.day}>今天</div>
-          <div className={styles.notes}>#</div>
-          <div className={styles.camera}>
-            <CameraOutline color="#c9c9c9" />
+          <div className={styles.pay}>
+            <div className={styles.info}>支出</div>
+            <div className={styles.info + " " + styles.inCome}>收入</div>
+            <div className={styles.account}>
+              不选择账户
+              <div className={styles.triangle}></div>
+            </div>
+          </div>
+          <div className={styles.cost}>
+            <i className={styles.RMBIcon}>￥</i>
+            <Input
+              autoFocus={true}
+              className={styles.costInput}
+              value={inputValue}
+            />
+          </div>
+          <Divider className={styles.divider} />
+          <Swiper className={styles.swiper}>
+            <Swiper.Item className={styles.item}>
+              {icons.map((icon, index) => {
+                return (
+                  <div className={styles.icon} key={icon}>
+                    <div
+                      onClick={() => {
+                        setclickIndex(index);
+                      }}
+                      className={
+                        index === clickIndex
+                          ? styles.clickBackground
+                          : styles.iconBackground
+                      }
+                    >
+                      <svg className="icon" aria-hidden="true">
+                        {index === clickIndex ? (
+                          <use xlinkHref={`#icon-${icon}C`}></use>
+                        ) : (
+                          <use xlinkHref={`#icon-${icon}`}></use>
+                        )}
+                      </svg>
+                    </div>
+                    {iconsName[index]}
+                  </div>
+                );
+              })}
+            </Swiper.Item>
+            <Swiper.Item>
+              <div></div>
+              <div></div>
+            </Swiper.Item>
+            <Swiper.Item>
+              <div></div>
+            </Swiper.Item>
+          </Swiper>
+          <div className={styles.tool}>
+            <div className={styles.note}>添加备注...</div>
+            <div className={styles.day}>今天</div>
+            <div className={styles.notes}>#</div>
+            <div className={styles.camera}>
+              <CameraOutline color="#c9c9c9" />
+            </div>
           </div>
         </div>
         <NumberKeyboard
-          visible={true}
-          onClose={actions.onClose}
-          onInput={actions.onInput}
-          onDelete={actions.onDelete}
+          className={styles.keyboard}
+          visible={keyboard}
           showCloseButton={false}
-          confirmText="确定"
+          confirmText="完成"
+          onConfirm={() => {
+            seteditVisivale(false);
+            setkeyboard(false);
+          }}
+          onClose={() => {
+            setInputValue("");
+          }}
+          onInput={(value) => {
+            setInputValue((v) => {
+              return v + value;
+            });
+          }}
+          onDelete={() => {
+            setInputValue(inputValue.slice(0, inputValue.length - 1));
+          }}
           customKey="."
         />
       </Popup>

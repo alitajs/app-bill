@@ -245,7 +245,10 @@
   .divider::after,.divider::before{
     border-width: 0.02rem 0 0 !important;
  }
-
+ .content {
+  height:65%;
+   
+ }
  .swiper{
    height:280px;
    width:100%;
@@ -254,27 +257,38 @@
     margin:0 auto;
     display: flex;
     justify-content:space-around;
-    padding-top: 20px;
     flex-wrap: wrap;
+    margin-top:-10px;
     .icon {
       display: flex;
       flex-direction: column;
-      justify-content:center;
       align-items:center;
-      height: 110px;
+      justify-content: center;
       width:115px;
       color:#a3a3a3;
-      svg {
-        flex-shrink:0;
-        margin-bottom: 15px;
-      }
     }
+   }
+   .clickBackground{
+     background-color:#e2ecf8;
+     border-radius:10px;
+     height: 60px;
+     width: 60px;
+     display: flex;
+     justify-content:center;
+     align-items:center;
+   }
+   .iconBackground{
+    height: 60px;
+    width: 70px;
+    display: flex;
+    justify-content:center;
+    align-items:center;
    }
  }
  .tool {
   width: 95%;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 20px;
   display: flex;
   justify-content:space-between;
   .note {
@@ -306,5 +320,10 @@
      height:60px;
      line-height: 60px;
    }
+  }
 }
+.keyboard{
+  background-color: #e6e6e6;
+  width:95%;
+  margin:10px auto;
 }
