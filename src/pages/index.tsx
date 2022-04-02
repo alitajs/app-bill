@@ -7,8 +7,6 @@
  */
 import "@/assets/iconfont";
 import React, { useEffect, useState } from "react";
-// import { BILL_LOCAL_NAME } from "@/constants";
-// import { history } from "alita";
 import styles from "./index.less";
 import {
   LeftOutline,
@@ -27,11 +25,11 @@ import {
   Input,
   NumberKeyboard,
   Popup,
-  Space,
   Swiper,
-  Toast,
 } from "antd-mobile";
+import { useNavigate } from "alita";
 const Page = () => {
+  const history = useNavigate();
   const [icons] = useState([
     "canyin",
     "kalaok",
@@ -54,7 +52,7 @@ const Page = () => {
     "水果零食",
     "交通",
     "生活日用",
-    "人气社交",
+    "人情社交",
     "宠物",
     "养娃",
     "运动",
@@ -66,7 +64,7 @@ const Page = () => {
   //选择弹窗
   const [selectVisivale, seteSelectVisivale] = useState(false);
   //筛选弹窗
-  const [filterVisivale, seteFilterVisivale] = useState(true);
+  const [filterVisivale, seteFilterVisivale] = useState(false);
   const [keyboard, setkeyboard] = useState(false);
   const [clickIndex, setclickIndex] = useState(-1);
   const [flag, setFlag] = useState(false);
@@ -253,7 +251,15 @@ const Page = () => {
           <div className={styles.payAndInComeInfo}>
             <div className={styles.square}></div>
             <div className={styles.payInfo}>
-              <div className={styles.title}>
+              <div
+                className={styles.title}
+                onClick={() => {
+                  history({
+                    pathname: "bill",
+                    search: "?id=456",
+                  });
+                }}
+              >
                 <span>App Store & Apple Music:于03.2...</span>
                 <span className={styles.money}>-1.00</span>
               </div>
