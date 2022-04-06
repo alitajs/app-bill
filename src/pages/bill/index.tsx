@@ -2,13 +2,29 @@ import React from "react";
 import type { FC } from "react";
 import styles from "./index.less";
 import { Button, Card } from "antd-mobile";
-import { CameraOutline, EditSFill, RightOutline } from "antd-mobile-icons";
+import {
+  CameraOutline,
+  EditSFill,
+  LeftOutline,
+  RightOutline,
+} from "antd-mobile-icons";
+import { useNavigate } from "alita";
 
 interface HomePageProps {}
 
 const BillPage: FC<HomePageProps> = () => {
+  const navigation = useNavigate();
   return (
     <div className={styles.billInfoWrapper}>
+      <div
+        className={styles.header}
+        onClick={() => {
+          navigation("/");
+        }}
+      >
+        <LeftOutline></LeftOutline>
+        <span> 账单详情</span>
+      </div>
       <div className={styles.content}>
         <Card className={styles.header}>
           <div className={styles.money}>

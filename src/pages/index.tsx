@@ -6,14 +6,13 @@
  * @Description:
  */
 import "@/assets/iconfont";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./index.less";
 import {
   LeftOutline,
   DownOutline,
   EyeOutline,
   RightOutline,
-  EditSOutline,
   EditSFill,
   CloseOutline,
   CameraOutline,
@@ -60,13 +59,15 @@ const Page = () => {
   ]);
   const [inputValue, setInputValue] = useState("");
   //添加弹窗
-  const [editVisivale, seteditVisivale] = useState(false);
+  const [editVisitable, setEditVisitable] = useState(false);
   //选择弹窗
-  const [selectVisivale, seteSelectVisivale] = useState(false);
+  const [selectVisitable, setSelectVisitable] = useState(false);
   //筛选弹窗
-  const [filterVisivale, seteFilterVisivale] = useState(false);
-  const [keyboard, setkeyboard] = useState(false);
-  const [clickIndex, setclickIndex] = useState(-1);
+  const [filterVisitable, setFilterVisitable] = useState(false);
+  //设置预算弹窗
+  const [presetValue, setPresetValue] = useState(false);
+  const [keyboard, setKeyboard] = useState(false);
+  const [clickIndex, setClickIndex] = useState(-1);
   const [flag, setFlag] = useState(false);
   //鼠标在元素中的相对位置
   const [position, setPosition] = useState({
@@ -203,7 +204,7 @@ const Page = () => {
         <span
           className={styles.month}
           onClick={() => {
-            seteSelectVisivale(true);
+            setSelectVisitable(true);
           }}
         >
           2022年3月
@@ -220,13 +221,21 @@ const Page = () => {
               <span className={styles.money}>
                 ￥<span className={styles.count}>3,772.72</span>
               </span>
-              <span className={styles.preset}>
-                ￥5000 <RightOutline />
+              <span
+                className={styles.preset}
+                onClick={() => {
+                  setPresetValue(true);
+                  setKeyboard(true);
+                }}
+              >
+                ￥5000
+                <RightOutline />
               </span>
             </div>
             <div className={styles.inCome}>
               <span className={styles.name}>
-                总收入 <EyeOutline />
+                总收入
+                <EyeOutline />
               </span>
               <span className={styles.money}>
                 ￥<span className={styles.count}>5,772.72</span>
@@ -332,19 +341,20 @@ const Page = () => {
         onTouchEnd={end}
         className={styles.edit}
         onClick={() => {
-          seteditVisivale(true);
-          setkeyboard(true);
+          setEditVisitable(true);
+          setKeyboard(true);
           setInputValue("");
         }}
       >
         <EditSFill className={styles.editIcon} />
       </div>
+      {/* //添加账单 */}
       <Popup
         bodyClassName={styles.popup}
-        visible={editVisivale}
+        visible={editVisitable}
         onMaskClick={() => {
-          seteditVisivale(false);
-          setkeyboard(false);
+          setEditVisitable(false);
+          setKeyboard(false);
           setInputValue("");
         }}
         bodyStyle={{ height: "80vh" }}
@@ -358,8 +368,8 @@ const Page = () => {
             <CloseOutline
               color="#c8c8c8"
               onClick={() => {
-                seteditVisivale(false);
-                setkeyboard(false);
+                setEditVisitable(false);
+                setKeyboard(false);
               }}
             />
           </div>
@@ -387,7 +397,7 @@ const Page = () => {
                   <div className={styles.icon} key={icon}>
                     <div
                       onClick={() => {
-                        setclickIndex(index);
+                        setClickIndex(index);
                       }}
                       className={
                         index === clickIndex
@@ -431,8 +441,8 @@ const Page = () => {
           showCloseButton={false}
           confirmText="完成"
           onConfirm={() => {
-            seteditVisivale(false);
-            setkeyboard(false);
+            setEditVisitable(false);
+            setKeyboard(false);
           }}
           onClose={() => {
             setInputValue("");
@@ -448,11 +458,12 @@ const Page = () => {
           customKey="."
         />
       </Popup>
+      {/* 选择月份 */}
       <Popup
         bodyClassName={styles.selectPopup}
-        visible={selectVisivale}
+        visible={selectVisitable}
         onMaskClick={() => {
-          seteSelectVisivale(false);
+          setSelectVisitable(false);
         }}
         bodyStyle={{ height: "35vh" }}
       >
@@ -472,11 +483,12 @@ const Page = () => {
           <Button>4月</Button>
         </div>
       </Popup>
+      {/* 筛选 */}
       <Popup
         bodyClassName={styles.filterPopup}
-        visible={filterVisivale}
+        visible={filterVisitable}
         onMaskClick={() => {
-          seteFilterVisivale(false);
+          setFilterVisitable(false);
         }}
         bodyStyle={{ height: "80vh" }}
       >
@@ -490,6 +502,55 @@ const Page = () => {
             <div>全部支出</div>
             <div>全部收入</div>
           </div>
+        </div>
+      </Popup>
+      {/* 设置预算 */}
+      <Popup
+        bodyClassName={styles.presetPopup}
+        visible={presetValue}
+        onMaskClick={() => {
+          setPresetValue(false);
+          setKeyboard(false);
+        }}
+        bodyStyle={{ height: "48vh" }}
+      >
+        <div className={styles.popupWrapper}>
+          <div className={styles.header}>
+            <LeftOutline color="#333333" />
+            <span>设置总预算</span>
+          </div>
+          <div className={styles.cost}>
+            <i className={styles.RMBIcon}>￥</i>
+            <Input
+              autoFocus={true}
+              className={styles.costInput}
+              value={inputValue}
+            />
+          </div>
+          <Divider className={styles.divider} />
+          <div className={styles.costMoney}>3月已使用金额 ￥3372.72</div>
+          <NumberKeyboard
+            className={styles.keyboard + " " + "keyboard"}
+            visible={keyboard}
+            showCloseButton={false}
+            confirmText="完成"
+            onConfirm={() => {
+              setEditVisitable(false);
+              setKeyboard(false);
+            }}
+            onClose={() => {
+              setInputValue("");
+            }}
+            onInput={(value) => {
+              setInputValue((v) => {
+                return v + value;
+              });
+            }}
+            onDelete={() => {
+              setInputValue(inputValue.slice(0, inputValue.length - 1));
+            }}
+            customKey="."
+          />
         </div>
       </Popup>
     </div>
