@@ -1,7 +1,7 @@
 /* 样式统一调整的区域 */
 //卡片
 .adm-card-body {
-  padding: 0;
+  padding: 0 !important;
 }
 //分割线
 .adm-divider::after,
@@ -64,8 +64,20 @@
     color:#fff;
   }
 }
-.main{
- 
+//筛选弹窗按钮
+.btnGroup{
+  .adm-button,.adm-button::before{
+    width:50%
+  }
+}
+.accountCard{
+  .adm-divider{
+    margin:0;
+  }
+  .adm-divider::after,
+.adm-divider::before {
+  border-width: 0.02rem 0 0 !important;
+}
 }
 //字体图标
 .icon {

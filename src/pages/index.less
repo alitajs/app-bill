@@ -1,5 +1,9 @@
 .index {
   position: relative;
+  .w{
+    width: 95%;
+    margin: 0 auto;
+  }
   .header {
     height: 220px;
     border-bottom: 1px solid #d8d5d5;
@@ -25,18 +29,25 @@
       }
     }
     .month {
+      .w();
+      display: flex;
       position: relative;
       top: 35%;
       font-size: 60px;
       margin-left: 40px;
       font-weight: bold;
+      align-items: center;
+      justify-content:space-between;
+      span:last-child{
+        font-size: 30px;
+        margin-right: 40px;
+      }
     }
   }
   .content {
     .card {
-      width: 95%;
-      margin: 0 auto;
-      height: 280px;
+    .w();
+    height: 280px;
     }
     height: calc(100vh - 220px);
     background-color: #f5f5f5;
@@ -345,11 +356,15 @@
 }
 //筛选
 .filterPopup{
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;
   .header{
     font-size: 35px;
     display: flex;
     width: 95%;
-    margin: 30px auto;
+    margin: 0 auto;
+    margin-top: 20px;
     align-items: center;
     & > span {
       font-size: 35px;
@@ -358,9 +373,33 @@
   }
   .categoryWrapper{
     width:95%;
-    margin: 30px auto;
+    margin: 0px auto;
+    font-size: 26px;
     .category{
+      margin-top: 20px;
       color:#babbba
+    }
+    .name {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      span {
+        margin-top: 20px;
+        border-radius: 10px;
+        flex-basis: 30%;
+        text-align:center;
+        height: 60px;
+        line-height: 60px;
+        background-color: #f0f0f0;
+      }
+    }
+    .name:after{
+      content: '';
+      width: 30%;
+      border:1px solid transparent;
+    }
+    &>div{
+      margin-top: 20px;
     }
   }
 }

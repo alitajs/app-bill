@@ -1,23 +1,25 @@
 .billInfoWrapper{
   height:100vh;
-  // padding-top:30px;
   background-color:#f5f5f5;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
   .header{
-    height:70px;
-    line-height:70px;
+    height:80px;
+    line-height:80px;
     background-color: #fff;
     font-weight:bold;
     font-size:30px;
   }
   .content{
-    height:85%;
-    padding-top:20px;
-    .header{
+    height:80%;
+    .cardOne{
       height:300px;
       width:90%;
       margin: 0 auto;
       .money{
         display: flex;
+        padding-top:20px;
         justify-content:space-between;
         align-items:center;
         .icon{
@@ -65,7 +67,7 @@
       }
   
     }
-    .main{
+    .cardTwo{
       height:700px;
       width:90%;
       margin: 0 auto;
@@ -107,7 +109,7 @@
     }
   }
   .footer {
-    height:12%;
+    height:10%;
     display:flex;
     background-color:#fff;
     justify-content:space-evenly;

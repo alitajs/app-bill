@@ -16,11 +16,13 @@ import {
   EditSFill,
   CloseOutline,
   CameraOutline,
+  FilterOutline,
 } from "antd-mobile-icons";
 import {
   Button,
   Card,
   Divider,
+  InfiniteScroll,
   Input,
   NumberKeyboard,
   Popup,
@@ -56,6 +58,34 @@ const Page = () => {
     "养娃",
     "运动",
     "生活服务",
+  ]);
+  const [categorys] = useState([
+    "餐饮",
+    "休闲玩乐",
+    "购物",
+    "穿搭美容",
+    "水果零食",
+    "交通",
+    "生活日用",
+    "人情设交",
+    "宠物",
+    "养娃",
+    "运动",
+    "生活服务",
+    "买菜",
+    "住房",
+    "爱车",
+    "学习",
+    "网络虚拟",
+    "烟酒",
+    "医疗保健",
+    "金融保险",
+    "家具家电",
+    "酒店旅行",
+    "转账",
+    "公益",
+    "互助保障",
+    "其他",
   ]);
   const [inputValue, setInputValue] = useState("");
   //添加弹窗
@@ -193,6 +223,7 @@ const Page = () => {
     }
     setFlag(false);
   };
+
   return (
     <div className={styles.index}>
       <header className={styles.header}>
@@ -201,15 +232,24 @@ const Page = () => {
           <span>记账本</span>
           <div className={styles.dashedSquare}></div>
         </section>
-        <span
-          className={styles.month}
-          onClick={() => {
-            setSelectVisitable(true);
-          }}
-        >
-          2022年3月
-          <DownOutline />
-        </span>
+        <div className={styles.month}>
+          <span
+            onClick={() => {
+              setSelectVisitable(true);
+            }}
+          >
+            2022年3月
+            <DownOutline />
+          </span>
+          <span
+            onClick={() => {
+              setFilterVisitable(true);
+            }}
+          >
+            <FilterOutline />
+            筛选
+          </span>
+        </div>
       </header>
       <div className={styles.content}>
         <Card className={styles.payCard}>
@@ -240,14 +280,14 @@ const Page = () => {
               <span className={styles.money}>
                 ￥<span className={styles.count}>5,772.72</span>
               </span>
-              <span className={styles.preset}>
-                未设置预算 <RightOutline />
-              </span>
             </div>
           </div>
           <Divider className={styles.divider} />
-          <div className={styles.cardFooter}>
-            <span>单类目账户</span>
+          <div
+            className={styles.cardFooter}
+            onClick={() => history("/account")}
+          >
+            <span>全部账本</span>
             <RightOutline style={{ float: "right" }} />
           </div>
         </Card>
@@ -497,11 +537,40 @@ const Page = () => {
           <span>筛选</span>
         </div>
         <div className={styles.categoryWrapper}>
-          <span className={styles.category}>快捷分类</span>
-          <div className={styles.name}>
-            <div>全部支出</div>
-            <div>全部收入</div>
+          <div className={styles.quickCategory}>
+            <span className={styles.category}>快捷分类</span>
+            <div className={styles.name}>
+              <span>全部支出</span>
+              <span>全部收入</span>
+            </div>
           </div>
+          <div className={styles.costCategory}>
+            <span className={styles.category}>支出分类</span>
+            <div className={styles.name}>
+              {categorys.map((category) => {
+                return <span key={category}>{category}</span>;
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="btnGroup">
+          <Button
+            style={{
+              "--text-color": "#4d93f7",
+              "--background-color": "#e1ebf7",
+              "--border-radius": "0",
+            }}
+          >
+            重置
+          </Button>
+          <Button
+            color="primary"
+            style={{
+              "--border-radius": "0",
+            }}
+          >
+            确认
+          </Button>
         </div>
       </Popup>
       {/* 设置预算 */}

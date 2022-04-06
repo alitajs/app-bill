@@ -23,10 +23,10 @@ const BillPage: FC<HomePageProps> = () => {
         }}
       >
         <LeftOutline></LeftOutline>
-        <span> 账单详情</span>
+        <span>账单详情</span>
       </div>
       <div className={styles.content}>
-        <Card className={styles.header}>
+        <Card className={styles.cardOne}>
           <div className={styles.money}>
             <div className={styles.icon}>
               <div className={styles.clickBackground}>
@@ -52,7 +52,7 @@ const BillPage: FC<HomePageProps> = () => {
             </span>
           </div>
         </Card>
-        <Card className={styles.main + " " + "main"}>
+        <Card className={styles.cardTwo}>
           <div className={styles.info}>
             <span>星期</span>
             <span>
