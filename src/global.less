@@ -8,7 +8,9 @@
 .adm-divider::before {
   border-width: 0.04rem 0 0 !important;
 }
-
+.adm-popup-body.adm-popup-body-position-bottom{
+  border-top:0.5px solid rgb(186, 185, 185) ;
+}
 //键盘
 .keyboard{
   .adm-number-keyboard-key{
@@ -46,13 +48,47 @@
   }
  
 }
+/*
+首页样式
+*/
+//选择月份弹窗按钮
 .month{
   .adm-button{
     width:150px;
     height:70px;
   }
 }
-//账单详情按钮
+//筛选弹窗按钮
+.btnGroup{
+  .adm-button,.adm-button::before{
+    width:50%
+  }
+}
+/*
+账本页面样式
+*/
+//账本卡片
+.accountCard{
+  .adm-divider{
+    margin:0;
+  }
+.adm-divider::after,
+.adm-divider::before {
+  border-width: 0.02rem 0 0 !important;
+}
+}
+//账本设置按钮
+.Dialog{
+  .adm-divider::after,
+.adm-divider::before {
+  border-width: 0.01rem 0 0 !important;
+}
+}
+/*
+账单详情页面样式
+*/
+.billInfoWrapper{
+//删除编辑按钮
 .billFooter{
   .adm-button,.adm-button::before{
     width:300px;
@@ -64,21 +100,29 @@
     color:#fff;
   }
 }
-//筛选弹窗按钮
-.btnGroup{
-  .adm-button,.adm-button::before{
-    width:50%
+//账单详情金额输入框
+.moneyInput{
+  .adm-input-element{
+    font-size:65px;
+    font-weight:bold;
+    --text-align:right;
   }
 }
-.accountCard{
-  .adm-divider{
-    margin:0;
-  }
-  .adm-divider::after,
-.adm-divider::before {
-  border-width: 0.02rem 0 0 !important;
+}
+//删除弹出框
+ .billDeleteDialog{
+  .delete{
+  font-size:35px;
+  font-weight:bold;
+  text-align: center !important;
+  margin-bottom: 10px;
 }
 }
+
+
+
+
+
 //字体图标
 .icon {
   width: 1.5em;

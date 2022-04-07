@@ -169,7 +169,7 @@
     }
   }
 }
-//添加账单
+//添加账单弹窗
 .popup {
   @FontColor:#c2c2c2;
   .font {
@@ -330,7 +330,7 @@
    }
   }
 }
-//选择月份
+//选择月份弹窗
 .selectPopup{
   .header{
     font-size: 35px;
@@ -354,7 +354,7 @@
     justify-content:space-around
   }
 }
-//筛选
+//筛选弹窗
 .filterPopup{
   display: flex;
   flex-direction: column;
@@ -391,6 +391,31 @@
         height: 60px;
         line-height: 60px;
         background-color: #f0f0f0;
+        position: relative;
+        overflow: hidden;
+      }
+      .click{
+        background-color: #e2ecf7;
+      }
+      .click::after{
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-bottom: 30px solid #1a75f7;
+        border-left: 40px solid transparent;
+      }
+      .click::before{
+        content: '✔';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color:rgb(251, 229, 229);
+        width: 30px;
+        height: 40px;
+        z-index: 999;
       }
     }
     .name:after{
@@ -403,14 +428,7 @@
     }
   }
 }
-//键盘
-.keyboard{
-  background-color: #f5f5f5;
-  width:95%;
-  margin:10px auto;
-  height:30%;
-}
-//预设弹窗
+//设置预算弹窗
 .presetPopup{
  .popupWrapper{
   width:95%;
@@ -457,4 +475,11 @@
     align-items: center;
   }
  }
+}
+//键盘
+.keyboard{
+  background-color: #f5f5f5;
+  width:95%;
+  margin:10px auto;
+  height:30%;
 }

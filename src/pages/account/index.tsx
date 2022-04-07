@@ -1,18 +1,15 @@
 import React from "react";
 import type { FC } from "react";
 import styles from "./index.less";
-import { Button, Card, Divider } from "antd-mobile";
+import { Button, Card, Dialog, Divider } from "antd-mobile";
 import {
   AddOutline,
-  CameraOutline,
-  EditSFill,
   FileOutline,
   FireFill,
-  LeftOutline,
-  ReceivePaymentOutline,
   RightOutline,
 } from "antd-mobile-icons";
 import { useNavigate } from "alita";
+import PageHeader from "@/components/header";
 
 interface HomePageProps {}
 
@@ -20,15 +17,7 @@ const AccountPage: FC<HomePageProps> = () => {
   const navigation = useNavigate();
   return (
     <div className={styles.accountInfoWrapper}>
-      <div
-        className={styles.header}
-        onClick={() => {
-          navigation("/");
-        }}
-      >
-        <LeftOutline></LeftOutline>
-        <span>全部账本</span>
-      </div>
+      <PageHeader title="全部账本"></PageHeader>
       <div className={styles.add}>
         添加账本
         <AddOutline />
@@ -63,7 +52,26 @@ const AccountPage: FC<HomePageProps> = () => {
             <FireFill color="#f35639" />
             <span>吃吃吃</span>
             <RightOutline color="#d4d4d4" />
-            <span className={styles.setIcon}>...</span>
+            <span
+              className={styles.setIcon}
+              onClick={() => {
+                Dialog.show({
+                  content: (
+                    <div className="Dialog">
+                      <div>设置</div>
+                      <Divider></Divider>
+                      <div>预算管理</div>
+                      <Divider></Divider>
+                      <div>删除帐本</div>
+                    </div>
+                  ),
+                  closeOnAction: true,
+                  closeOnMaskClick: true,
+                });
+              }}
+            >
+              ...
+            </span>
           </span>
           <Divider></Divider>
           <div className={styles.costAndRec}>

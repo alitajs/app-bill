@@ -22,7 +22,6 @@ import {
   Button,
   Card,
   Divider,
-  InfiniteScroll,
   Input,
   NumberKeyboard,
   Popup,
@@ -115,6 +114,9 @@ const Page = () => {
     y: 0,
   });
   const down = (e: any) => {
+    setEditVisitable(true);
+    setKeyboard(true);
+    setInputValue("");
     const edit: HTMLDivElement | null = document.querySelector("#edit");
     setFlag(true);
     let touch = null;
@@ -380,11 +382,6 @@ const Page = () => {
         onTouchMove={move}
         onTouchEnd={end}
         className={styles.edit}
-        onClick={() => {
-          setEditVisitable(true);
-          setKeyboard(true);
-          setInputValue("");
-        }}
       >
         <EditSFill className={styles.editIcon} />
       </div>
@@ -478,7 +475,6 @@ const Page = () => {
         <NumberKeyboard
           className={styles.keyboard + " " + "keyboard"}
           visible={keyboard}
-          showCloseButton={false}
           confirmText="完成"
           onConfirm={() => {
             setEditVisitable(false);
@@ -540,7 +536,7 @@ const Page = () => {
           <div className={styles.quickCategory}>
             <span className={styles.category}>快捷分类</span>
             <div className={styles.name}>
-              <span>全部支出</span>
+              <span className={styles.click}>全部支出</span>
               <span>全部收入</span>
             </div>
           </div>
