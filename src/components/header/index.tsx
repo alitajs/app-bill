@@ -12,14 +12,19 @@ interface HeaderProps {
 const PageHeader: FC<HeaderProps> = ({ title, pathname = "/" }) => {
   const navigation = useNavigate();
   return (
-    <div
-      className={styles.header}
-      onClick={() => {
-        navigation(pathname);
-      }}
-    >
-      <LeftOutline></LeftOutline>
-      <span>{title}</span>
+    <div className={styles.header}>
+      <LeftOutline
+        onClick={() => {
+          navigation(pathname);
+        }}
+      ></LeftOutline>
+      <span
+        onClick={() => {
+          navigation(pathname);
+        }}
+      >
+        {title}
+      </span>
     </div>
   );
 };

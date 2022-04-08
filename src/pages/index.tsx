@@ -473,6 +473,7 @@ const Page = () => {
           </div>
         </div>
         <NumberKeyboard
+          showCloseButton={false}
           className={styles.keyboard + " " + "keyboard"}
           visible={keyboard}
           confirmText="完成"

@@ -23,6 +23,7 @@
         "@alita/icons": "^0.2.0",
         "alita": "3.0.0-rc.1",
         "antd-mobile": "^5.9.1",
-        "antd-mobile-icons": "^0.2.2"
+        "antd-mobile-icons": "^0.2.2",
+        "dayjs": "^1.11.0"
     }
 }
