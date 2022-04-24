@@ -38,11 +38,11 @@
           font-size:35px;
           width:30%;
           height:80px;
+          text-align: right;
           .moneyText{
             font-size:65px;
             font-weight:bold;
           }
-          
         }
       }
       .notes {
@@ -51,8 +51,10 @@
         display: flex;
         justify-content:space-between;
         align-items:center;
-        span:first-child{
-          font-size: 35px;
+        .pay{
+            text-align: right;
+          }
+        .note{
           color:#d7d7d7;
         }
         .icon {
@@ -114,6 +116,7 @@
 //编辑账单弹窗
 .editPopup {
   @FontColor:#c2c2c2;
+  background-color:#f4f4f5;
   .font {
     text-align: center;
     border-radius: 10px;
@@ -254,7 +257,7 @@
 .inputKeyboard{
   .keyboard();
    height:30vh;
-   position: relative;
+   padding-top: 20px;
   //  &::after{
   //    content: '';
   //    border: 20px solid;
@@ -278,11 +281,61 @@
   //   z-index: 1;
   // }
 }
-.inputPopup{
-  position: relative;
-  .downOutline{
-    position: absolute;
-    bottom:0;
-    left:0;
+//选择日期弹窗
+.dayPopup{
+  .select {
+    padding-left: 15px;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size:35px;
+    margin: 15px 0;
   }
+}
+//更改账本弹窗
+.accountPopup{
+  .content{
+    width: 90%;
+    margin: 0 auto;
+    .select{
+      margin-top:20px ;
+      margin-bottom: 40px;
+      display: flex;
+      font-weight: bold;
+      font-size:35px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .accountList{
+      .listWrapper{
+        
+      }
+      .list{
+        font-size:35px;
+        padding-left: 20px;
+        display: flex;
+        justify-content:space-between;
+        align-items:center;
+        position: relative;
+        span{
+          span {
+            margin-left: 20px;
+          }
+        }
+        .icon{
+          height: 35px !important;
+          width: 35px !important;
+        }
+      }
+      // .list:after{
+      //   content:"";
+      //   position: absolute;
+      //   left:0;
+      //   right: 0;
+      //   bottom: -60%;
+      //   height: 160%;
+      //   background: rgba(217, 217, 217, 0.2);
+      // }
+    }
+  }
+ 
 }

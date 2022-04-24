@@ -8,8 +8,10 @@
 .adm-divider::before {
   border-width: 0.04rem 0 0 !important;
 }
-.adm-popup-body.adm-popup-body-position-bottom{
-  border-top:0.5px solid rgb(186, 185, 185) ;
+.adm-number-keyboard-popup{
+  .adm-popup-body.adm-popup-body-position-bottom{
+    border-top:0.5px solid rgb(186, 185, 185) ;
+  }
 }
 //键盘
 .keyboard{
@@ -64,6 +66,7 @@
     width:50%
   }
 }
+
 /*
 账本页面样式
 */
@@ -84,6 +87,7 @@
   border-width: 0.01rem 0 0 !important;
 }
 }
+
 /*
 账单详情页面样式
 */
@@ -108,6 +112,12 @@
     --text-align:right;
   }
 }
+}
+//账单详情备注输入框
+.noteInput{
+  .adm-input-element{
+    --text-align:right;
+  }
 }
 //删除弹出框
  .billDeleteDialog{

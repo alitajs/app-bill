@@ -28,6 +28,7 @@ import {
   Swiper,
 } from "antd-mobile";
 import { useNavigate } from "alita";
+import MovingBall from "@/components/MovingBall";
 const Page = () => {
   const history = useNavigate();
   const [icons] = useState([
@@ -97,135 +98,6 @@ const Page = () => {
   const [presetValue, setPresetValue] = useState(false);
   const [keyboard, setKeyboard] = useState(false);
   const [clickIndex, setClickIndex] = useState(-1);
-  const [flag, setFlag] = useState(false);
-  //鼠标在元素中的相对位置
-  const [position, setPosition] = useState({
-    x: 0,
-    y: 0,
-  });
-  //元素最大可移动位置
-  const [max, setMax] = useState({
-    w: 0,
-    h: 0,
-  });
-  //拖拽鼠标位置
-  const [now, setNow] = useState({
-    x: 0,
-    y: 0,
-  });
-  const down = (e: any) => {
-    setEditVisitable(true);
-    setKeyboard(true);
-    setInputValue("");
-    const edit: HTMLDivElement | null = document.querySelector("#edit");
-    setFlag(true);
-    let touch = null;
-    if (e.touches) {
-      touch = e.touches[0];
-    } else {
-      touch = e;
-    }
-    const maxW = edit ? document.body.clientWidth - edit?.offsetWidth : 0;
-    const maxH = edit ? document.body.clientHeight - edit?.offsetHeight : 0;
-    setMax({ w: maxW, h: maxH });
-    const x = edit ? touch.clientX - edit?.offsetLeft : 0;
-    const y = edit ? touch.clientY - edit?.offsetTop : 0;
-    setPosition({ x, y });
-  };
-  const move = (e: any) => {
-    const edit: any = document.querySelector("#edit");
-    if (flag) {
-      let touch = null;
-      if (e.touches) {
-        touch = e.touches[0];
-      } else {
-        touch = e;
-      }
-      const nx = touch.clientX - position.x;
-      const ny = touch.clientY - position.y;
-      setNow({
-        x: nx,
-        y: ny,
-      });
-      if (now.x < 0) {
-        setNow({
-          x: 0,
-          y: ny,
-        });
-        return;
-      }
-      if (now.x > max.w) {
-        setNow({
-          x: max.w,
-          y: ny,
-        });
-        return;
-      }
-      if (now.y < 0) {
-        setNow({
-          x: nx,
-          y: 0,
-        });
-        return;
-      }
-      if (now.y > max.h) {
-        setNow({
-          x: nx,
-          y: max.h,
-        });
-        return;
-      }
-      if (now.y > edit.offsetHeight) {
-        setNow({
-          x: nx,
-          y: max.h,
-        });
-      }
-      if (now.y <= edit.offsetHeight) {
-        setNow({
-          x: nx,
-          y: 0,
-        });
-      }
-      if (now.x > edit.offsetWidth) {
-        setNow({
-          x: max.w,
-          y: ny,
-        });
-      }
-      if (now.x <= edit.offsetWidth) {
-        setNow({
-          x: 0,
-          y: ny,
-        });
-      }
-      edit.style.left = now.x / 50 + "rem";
-      edit.style.top = now.y / 50 + "rem";
-      document.addEventListener("touchmove", () => {
-        // e.preventDefault();
-      });
-    }
-  };
-  const end = () => {
-    if (now.y !== 0) {
-      const edit: any = document.querySelector("#edit");
-      if (now.x > document.body.clientWidth / 2) {
-        edit.style.left = "86vw";
-      }
-      if (now.x <= document.body.clientWidth / 2) {
-        edit.style.left = "5vw";
-      }
-      if (now.y < document.body.clientHeight / 2) {
-        console.log(now.y);
-        edit.style.top = "5vh";
-      }
-      if (now.y > document.body.clientHeight / 2) {
-        edit.style.top = "86vh";
-      }
-    }
-    setFlag(false);
-  };
-
   return (
     <div className={styles.index}>
       <header className={styles.header}>
@@ -376,15 +248,14 @@ const Page = () => {
           </div>
         </Card>
       </div>
-      <div
-        id="edit"
-        onTouchStart={down}
-        onTouchMove={move}
-        onTouchEnd={end}
-        className={styles.edit}
+      <MovingBall
+        touch={() => {
+          setEditVisitable(true);
+          setKeyboard(true);
+        }}
       >
         <EditSFill className={styles.editIcon} />
-      </div>
+      </MovingBall>
       {/* //添加账单 */}
       <Popup
         bodyClassName={styles.popup}
@@ -473,6 +344,7 @@ const Page = () => {
           </div>
         </div>
         <NumberKeyboard
+          showCloseButton={false}
           className={styles.keyboard + " " + "keyboard"}
           visible={keyboard}
           confirmText="完成"

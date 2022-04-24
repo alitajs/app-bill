@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { FC } from "react";
 import styles from "./index.less";
 import "@/assets/iconfont";
+import dayjs from "dayjs";
 
 import {
   Button,
+  Calendar,
   Card,
   Dialog,
   Divider,
@@ -15,9 +17,12 @@ import {
 } from "antd-mobile";
 import {
   CameraOutline,
+  CheckCircleOutline,
   CloseOutline,
   DownOutline,
   EditSFill,
+  FileOutline,
+  FireFill,
   LeftOutline,
   RightOutline,
 } from "antd-mobile-icons";
@@ -32,10 +37,14 @@ const BillPage: FC<HomePageProps> = () => {
   const [editPopup, setEditPopup] = useState(false);
   //键盘弹窗
   const [keyboard, setKeyboard] = useState(false);
-  //修改键盘弹窗
-  const [inputKeyboard, setinputKeyboard] = useState(false);
-  //输入框
-  const [inputValue, setInputValue] = useState("");
+  //键盘输入值
+  const [inputValue, setInputValue] = useState("-4.5");
+  //日期弹窗
+  const [dayPopup, setDayPopup] = useState(false);
+  const [day, setDay] = useState("2020年4月6日");
+  const defaultSingle = new Date();
+  //账本弹窗
+  const [accountPopup, setAccountPopup] = useState(false);
   //点击标签序号
   const [clickIndex, setClickIndex] = useState(-1);
   //字体图标名称
@@ -60,10 +69,37 @@ const BillPage: FC<HomePageProps> = () => {
   ]);
   //金额修改状态
   const [editMoneyState, setEditMoneyState] = useState(false);
+  //金额
+  const [money, setMoney] = useState("-4.5");
   //备注修改态
   const [editNoteState, setEditNoteState] = useState(false);
+  const [note, setNote] = useState("代付");
+  //全部账本
+  const [accountList, setAccountList] = useState(["总帐本", "吃吃吃"]);
+  //已收录账本
+  const [includeList, setIncludeList] = useState(["总帐本"]);
+  //选中的账本序号
+  const [cListIndex, setCListIndex] = useState(-1);
+  useEffect(() => {
+    setInputValue(money.slice(1));
+  }, []);
+  useEffect(() => {
+    console.log("111", cListIndex);
+    console.log(includeList);
+  });
+  useEffect(() => {
+    setMoney(money.slice(0, 1) + inputValue);
+  }, [inputValue]);
   return (
-    <div className={styles.billInfoWrapper + " " + "billInfoWrapper"}>
+    <div
+      className={styles.billInfoWrapper + " " + "billInfoWrapper"}
+      onClick={() => {
+        if (editMoneyState || editNoteState) {
+          setEditMoneyState(false);
+          setEditNoteState(false);
+        }
+      }}
+    >
       <PageHeader title="账单详情"></PageHeader>
       <div className={styles.content}>
         <Card className={styles.cardOne}>
@@ -83,7 +119,6 @@ const BillPage: FC<HomePageProps> = () => {
               className={styles.moneyEdit}
               onClick={() => {
                 setEditMoneyState(true);
-                setinputKeyboard(true);
               }}
             >
               {editMoneyState ? (
@@ -94,31 +129,56 @@ const BillPage: FC<HomePageProps> = () => {
                 ></Input>
               ) : (
                 <>
-                  <span className={styles.moneyText}>-4.50</span>
+                  <span className={styles.moneyText}>{money}</span>
                   <EditSFill color="#d7d7d7" />
                 </>
               )}
             </span>
           </div>
           <div className={styles.notes}>
-            <span>备注</span>
-            <span className={styles.pay} onClick={() => {}}>
-              代付
-              <EditSFill color="#d7d7d7" className={styles.icon} />
+            <span className={styles.note}>备注</span>
+            <span
+              className={styles.noteEdit}
+              onClick={() => {
+                setEditNoteState(true);
+              }}
+            >
+              {editNoteState ? (
+                <Input
+                  value={note}
+                  className="noteInput"
+                  autoFocus={true}
+                ></Input>
+              ) : (
+                <>
+                  <span className={styles.pay}>
+                    {note}
+                    <EditSFill color="#d7d7d7" className={styles.icon} />
+                  </span>
+                </>
+              )}
             </span>
           </div>
         </Card>
         <Card className={styles.cardTwo}>
           <div className={styles.info}>
             <span>星期</span>
-            <span>
-              2022年03月29日
+            <span
+              onClick={() => {
+                setDayPopup(true);
+              }}
+            >
+              {day}
               <RightOutline color="#d7d7d7"></RightOutline>
             </span>
           </div>
           <div className={styles.info}>
             <span>账本</span>
-            <span>
+            <span
+              onClick={() => {
+                setAccountPopup(true);
+              }}
+            >
               总帐本
               <RightOutline color="#d7d7d7"></RightOutline>
             </span>
@@ -198,7 +258,6 @@ const BillPage: FC<HomePageProps> = () => {
         onMaskClick={() => {
           setEditPopup(false);
           setKeyboard(false);
-          setInputValue("");
         }}
         bodyStyle={{ height: "80vh" }}
       >
@@ -216,7 +275,6 @@ const BillPage: FC<HomePageProps> = () => {
               }}
             />
           </div>
-
           <div className={styles.cost}>
             <i className={styles.RMBIcon}>￥</i>
             <Input
@@ -268,14 +326,13 @@ const BillPage: FC<HomePageProps> = () => {
           className={styles.keyboard + " " + "keyboard"}
           visible={keyboard}
           showCloseButton={false}
-          confirmText="完成"
+          confirmText="保存"
           onConfirm={() => {
             setEditPopup(false);
             setKeyboard(false);
+            setMoney(money.slice(0, 1) + inputValue);
           }}
-          onClose={() => {
-            setInputValue("");
-          }}
+          onClose={() => {}}
           onInput={(value) => {
             setInputValue((v) => {
               return v + value;
@@ -287,28 +344,130 @@ const BillPage: FC<HomePageProps> = () => {
           customKey="."
         />
       </Popup>
-
-      <NumberKeyboard
-        showCloseButton={true}
-        className={styles.inputKeyboard + " " + "keyboard"}
-        visible={inputKeyboard}
-        confirmText="保存"
-        onConfirm={() => {
-          setinputKeyboard(false);
+      <Popup
+        bodyClassName={styles.editPopup}
+        visible={editMoneyState}
+        mask={false}
+        bodyStyle={{ height: "30vh" }}
+      >
+        <NumberKeyboard
+          className={styles.inputKeyboard + " " + "keyboard"}
+          visible={editMoneyState}
+          showCloseButton={false}
+          confirmText="保存"
+          onConfirm={() => {
+            setEditMoneyState(false);
+            if (inputValue.at(-1) === ".") {
+              setInputValue((v) => v + "00");
+            }
+          }}
+          onClose={() => {}}
+          onInput={(value) => {
+            setInputValue((v) => v + value);
+          }}
+          onDelete={() => {
+            setInputValue(inputValue.slice(0, inputValue.length - 1));
+          }}
+          customKey="."
+        />
+      </Popup>
+      <Popup
+        visible={dayPopup}
+        bodyStyle={{ height: "65vh" }}
+        bodyClassName={styles.dayPopup}
+        onMaskClick={() => {
+          setDayPopup(false);
         }}
-        onClose={() => {
-          setInputValue("");
+      >
+        <div className={styles.select}>
+          <LeftOutline></LeftOutline>
+          <span>选择日期</span>
+        </div>
+        <Calendar
+          selectionMode="single"
+          defaultValue={defaultSingle}
+          onChange={(val) => {
+            setDay(dayjs(val).format("YYYY年MM月DD日"));
+            setDayPopup(false);
+          }}
+        />
+      </Popup>
+      <Popup
+        visible={accountPopup}
+        bodyStyle={{ height: "35vh" }}
+        bodyClassName={styles.accountPopup}
+        onMaskClick={() => {
+          setAccountPopup(false);
         }}
-        onInput={(value) => {
-          setInputValue((v) => {
-            return v + value;
-          });
-        }}
-        onDelete={() => {
-          setInputValue(inputValue.slice(0, inputValue.length - 1));
-        }}
-        customKey="."
-      />
+      >
+        <div className={styles.content}>
+          <div className={styles.select}>
+            <div>
+              <LeftOutline></LeftOutline>
+              <span>收录账本</span>
+            </div>
+            <div style={{ color: "#028afb" }}>
+              <span>完成</span>
+              <span> ({includeList.length})</span>
+            </div>
+          </div>
+          <div className={styles.accountList}>
+            {accountList.map((account, index) => {
+              if (!includeList.includes(account) || index === cListIndex) {
+                return (
+                  <div key={account}>
+                    <span
+                      className={styles.list}
+                      onClick={() => {
+                        console.log(index, cListIndex);
+                        if (index === cListIndex) {
+                          setCListIndex(-1);
+                          setIncludeList(
+                            [...includeList].filter((item) => {
+                              return account !== item;
+                            })
+                          );
+                          return;
+                        }
+                        setCListIndex(index);
+                        setIncludeList([...includeList, account]);
+                      }}
+                    >
+                      <span>
+                        <FireFill color="#0387f5" />
+                        <span>{account}</span>
+                      </span>
+                      <svg
+                        className={styles.icon + " " + "icon"}
+                        aria-hidden="true"
+                      >
+                        {index === cListIndex ? (
+                          <use xlinkHref={`#icon-xuanzhong`}></use>
+                        ) : (
+                          <use xlinkHref={`#icon-weixuanzhong`}></use>
+                        )}
+                      </svg>
+                    </span>
+                    <Divider></Divider>
+                  </div>
+                );
+              }
+              return (
+                <div key={account}>
+                  <span className={styles.list}>
+                    <span>
+                      <FileOutline color="#0387f5" />
+                      <span>{account}</span>
+                    </span>
+                    <CheckCircleOutline color="#d7d7d7" />
+                  </span>
+                  <Divider></Divider>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </Popup>
     </div>
   );
 };
